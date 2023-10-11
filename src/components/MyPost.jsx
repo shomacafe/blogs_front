@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { Grid, CircularProgress, Typography, Box } from '@mui/material';
-import clientApi from '../../api/client';
 import { Link } from 'react-router-dom';
+import clientApi from '../api/client';
+import Cookies from 'js-cookie';
 
-const PostByUser = () => {
+const MyPost = () => {
   const [postData, setPostData] = useState([]);
 
   const fetchPosts = async () => {
     try {
-      const response = await clientApi.get('posts')
+      const headers = {
+        'access-token': Cookies.get('_access_token'),
+        'client': Cookies.get('_client'),
+        'uid': Cookies.get('_uid'),
+      };
+
+      const response = await clientApi.get('posts/my_posts', {
+        headers: headers
+      });
 
       console.log(response.data);
 
@@ -24,7 +33,7 @@ const PostByUser = () => {
 
   return (
     <>
-      <h2>投稿一覧</h2>
+      <h2>自分の投稿一覧</h2>
       {postData.map((post) => (
         <div key={post.id}>
           <Link to={`/posts/${post.id}`}>
@@ -43,4 +52,4 @@ const PostByUser = () => {
   )
 }
 
-export default PostByUser
+export default MyPost
