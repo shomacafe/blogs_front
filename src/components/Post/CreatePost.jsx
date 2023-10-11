@@ -87,13 +87,14 @@ const CreatePost = () => {
           <TextField
             label="本文"
             multiline
-            rows={4}
+            rows={25}
             {...register('body', { required: '本文を入力してください。' })}
             error={!!errors.body}
             helperText={errors.body?.message}
             fullWidth
             margin="dense"
           />
+          <h4>サムネイル画像</h4>
           <input
             accept='image/*'
             id='thumbnailInput'
@@ -110,16 +111,20 @@ const CreatePost = () => {
               サムネイル画像を選択
             </Button>
           </label>
-          {thumbnailPreview && <img alt='サムネイルプレビュー' src={thumbnailPreview} />}
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            color="primary"
-            style={{ marginTop: '1rem' }}
-          >
-            投稿する
-          </Button>
+          <div>
+            {thumbnailPreview && <img alt='サムネイルプレビュー' src={thumbnailPreview} width='300px' />}
+          </div>
+          <div>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              color="primary"
+              style={{ marginTop: '1rem' }}
+            >
+              投稿する
+            </Button>
+          </div>
         </Card>
       </form>
     </div>

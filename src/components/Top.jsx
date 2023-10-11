@@ -7,6 +7,7 @@ const Top = () => {
     <>
       <div>Top</div>
       <Link to={'new/post'}>記事を作成する</Link>
+      <Link to={'/posts'}>記事一覧</Link>
     </>
   )
 }
