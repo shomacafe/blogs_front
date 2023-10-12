@@ -8,6 +8,7 @@ import CreatePost from '../components/Post/CreatePost'
 import PostByUser from '../components/Post/PostByUser'
 import ShowPost from '../components/Post/ShowPost'
 import MyPost from '../components/MyPost'
+import EditPost from '../components/Post/EditPost'
 
 
 const styles = {
@@ -33,6 +34,7 @@ const Content = () => {
         <Route path='/posts' element={<Paper style={styles.paper}><PostByUser /></Paper>} />
         <Route path='/posts/my_posts' element={<Paper style={styles.paper}><MyPost /></Paper>} />
         <Route path='/posts/:post_id' element={<ShowPost />} />
+        <Route path='posts/edit/:post_id' element={<EditPost />} />
       </Routes>
     </>
   )

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { TextField, Button, Box, Typography, Card, CardHeader, Avatar } from '@mui/material';
 import clientApi from '../../api/client';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const styles = {
   container: {
@@ -21,11 +21,34 @@ const styles = {
   }
 }
 
-const CreatePost = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+const EditPost = () => {
+  const { post_id } = useParams();
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await clientApi.get(`/posts/${post_id}`);
+        const postData = response.data;
+
+        console.log(postData.title)
+
+        setValue('title', postData.title);
+        setValue('body', postData.body);
+
+        if (postData.image && postData.image.url) {
+          setThumbnailPreview(postData.image.url);
+        }
+      } catch (error) {
+        console.error('API レスポンスの取得に失敗しました', error);
+      }
+    };
+
+    fetchPost();
+  }, [post_id, setValue]);
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
@@ -60,11 +83,11 @@ const CreatePost = () => {
           requestData.append('post[image]', thumbnail);
         }
 
-        const response = await clientApi.post('/posts', requestData, {
+        const response = await clientApi.put(`/posts/${post_id}`, requestData, {
           headers: headers,
         });
         console.log('API レスポンス', response.data)
-        navigate('/');
+        navigate('/posts/my_posts');
       } catch (error) {
         console.error(error);
       }
@@ -75,9 +98,8 @@ const CreatePost = () => {
     <div style={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card style={styles.card}>
-          <CardHeader style={styles.header} title='記事を投稿する' />
+          <CardHeader style={styles.header} title='記事を編集する' />
           <TextField
-            label="タイトル"
             {...register('title', { required: 'タイトルを入力してください。' })}
             error={!!errors.title}
             helperText={errors.title?.message}
@@ -85,7 +107,6 @@ const CreatePost = () => {
             margin="dense"
           />
           <TextField
-            label="本文"
             multiline
             rows={25}
             {...register('body', { required: '本文を入力してください。' })}
@@ -122,7 +143,7 @@ const CreatePost = () => {
               color="primary"
               style={{ marginTop: '1rem' }}
             >
-              投稿する
+              更新する
             </Button>
           </div>
         </Card>
@@ -131,4 +152,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;
