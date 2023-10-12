@@ -4,9 +4,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import clientApi from '../api/client';
 import Cookies from 'js-cookie';
 
+const styles = {
+  spinnerContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+  }
+}
+
 const MyPost = () => {
   const [postData, setPostData] = useState([]);
   const navigate = useNavigate();
+  const [postLoading, setPostLoading] = useState(true);
 
   const fetchPosts = async () => {
     try {
@@ -25,6 +35,8 @@ const MyPost = () => {
       setPostData(response.data);
     } catch (error) {
       console.error('API レスポンスの取得に失敗しました', error);
+    } finally {
+      setPostLoading(false);
     }
   };
 
@@ -60,6 +72,14 @@ const MyPost = () => {
     }
   }
 
+  if (postLoading) {
+    return (
+      <div style={ styles.spinnerContainer}>
+        <CircularProgress />
+      </div>
+    )
+  }
+
   return (
     <>
       <h2>自分の投稿一覧</h2>
@@ -72,7 +92,9 @@ const MyPost = () => {
               {post.image.url && (
                 <img src={post.image.url} style={{ width: '200px' }} alt="post thumbnail" />
               )}
-              <Typography>{post.body}</Typography>
+              <Typography>
+                {post.body.length > 50 ? `${post.body.slice(0, 50)}...` : post.body}
+              </Typography>
             </Box>
           </Link>
           <Button variant='outlined' onClick={() => handleEditClick(post.id)}>

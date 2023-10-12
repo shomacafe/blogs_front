@@ -19,22 +19,26 @@ const styles = {
   },
   contentContainer: {
     width: '100%',
+    heigth: '100%',
     margin: '0 20px',
   },
   titleCard: {
     padding: '20px',
     marginBottom: '20px',
   },
+  image: {
+    marginBottom: '40px'
+  },
+  body: {
+    marginBottom: '20px',
+  },
   bodyCard: {
     padding: '20px',
-    marginBottom: '20px',
-    height: '100%',
+    minHeight: '100vh',
   },
   sideBar: {
     maxWidth: '300px',
     width: '100%',
-    height: '100px',
-    padding: '20px',
   },
 }
 
@@ -62,7 +66,7 @@ const ShowPost = () => {
     fetchPost();
   }, [post_id])
 
-  if (loading) {
+  if (postLoading) {
     return (
       <div style={ styles.spinnerContainer}>
         <CircularProgress />
@@ -77,14 +81,33 @@ const ShowPost = () => {
           <div style={styles.contentContainer}>
             <Card style={styles.titleCard}>
               <h2>{postData.title}</h2>
+              <span>{postData.createdAtFormatted}</span>
             </Card>
-            <Card style={styles.bodyCard}>
-              <div>{postData.body}</div>
+            <div style={styles.body}>
+              <Card style={styles.bodyCard}>
+                <div style={styles.image}>
+                  {postData.image.url && (
+                    <img src={postData.image.url} style={{ width: '100%' }} alt="post thumbnail" />
+                  )}
+                </div>
+                <div>
+                  {postData.body.split('\n').map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </div>
+              </Card>
+            </div>
+          </div>
+          <div style={styles.sideBar}>
+            <Card>
+              プロフィールが入ります。
+              プロフィールが入ります。
+              プロフィールが入ります。
             </Card>
           </div>
-          <Card style={styles.sideBar}>
-            プロフィールが入ります。
-          </Card>
         </div>
       }
     </>

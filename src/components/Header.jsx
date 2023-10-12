@@ -12,16 +12,9 @@ const styles = {
   appBar: {
     padding: '10px 30px',
     minHeight: '80px',
-    // backgroundColor: '#deb887',
-    // [theme.breakpoints.down('xs')]: {
-    //   padding: '5px'
-    // }
   },
   headerImageArea: {
     margin: 'auto',
-    // [theme.breakpoints.down('xs')]: {
-    //   margin: 'auto',
-    // }
   },
   headerImage: {
     maxWidth: '200px',
@@ -46,9 +39,6 @@ const styles = {
   signOutHeader: {
     display: 'flex',
     justifyContent: 'space-between',
-    // [theme.breakpoints.down('xs')]: {
-    //   flexDirection: 'column',
-    // }
   },
   singInHeader: {
     display: 'flex',
@@ -66,16 +56,7 @@ const styles = {
     right: '10px',
     display: 'flex',
     alignItems: 'center',
-    // [theme.breakpoints.down('xs')]: {
-    //   position: 'static',
-    //   margin: '10px auto',
-    // }
   },
-  currentUserName: {
-    // [theme.breakpoints.down('xs')]: {
-    //   display: 'none',
-    // }
-  }
 }
 
 const Header = () => {
@@ -142,7 +123,7 @@ const Header = () => {
       <AppBar position="static" style={styles.appBar}>
         <div style={isSignedIn ? styles.singInHeader : styles.signOutHeader}>
           <div style={styles.headerImageArea}>
-            ブログ
+            <Link to={'/'}>ブログ</Link>
           </div>
           <div style={isSignedIn ? styles.signInUserInfo : styles.signOutUserInfo}>
             <AuthButtons />
