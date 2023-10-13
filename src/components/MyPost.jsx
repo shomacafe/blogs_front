@@ -89,8 +89,10 @@ const MyPost = () => {
             <Box mb={2}>
               <Typography variant="h4">{post.title}</Typography>
               <Typography>{post.createdAt}</Typography>
-              {post.image.url && (
+              {post.image.url ? (
                 <img src={post.image.url} style={{ width: '200px' }} alt="post thumbnail" />
+              ) : (
+                <img src='/default_post_image.png' style={{ width: '200px' }} alt="post thumbnail" />
               )}
               <Typography>
                 {post.body.length > 50 ? `${post.body.slice(0, 50)}...` : post.body}

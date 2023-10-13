@@ -16,9 +16,6 @@ const styles = {
     flex: '1',
     justifyContent: 'center',
     padding: '20px 10px',
-    // [theme.breakpoints.down('sm')]: {
-    //   padding: '10px 0 20px 0',
-    // },
   },
 };
 
