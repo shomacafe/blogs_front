@@ -26,13 +26,13 @@ const styles = {
 function App() {
 
   return (
-    <Grid container direction='column' className={styles.root}>
+    <Grid container direction='column' style={styles.root}>
       <AuthProvider>
         <UserDataProvider>
           <CssBaseline />
           <BrowserRouter>
             <Header />
-            <Grid container className={styles.mainContainer}>
+            <Grid container style={styles.mainContainer}>
               <Content />
             </Grid>
             {/* <Footer /> */}
