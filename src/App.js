@@ -8,12 +8,10 @@ import Content from "./pages/Content";
 const styles = {
   root: {
     backgroundColor: '#f7f7f7',
-    display: 'flex',
-    flexDirection: 'column',
     minHeight: '100vh'
   },
   mainContainer: {
-    flex: '1',
+    display: 'flex',
     justifyContent: 'center',
     padding: '20px 10px',
   },
@@ -23,20 +21,20 @@ const styles = {
 function App() {
 
   return (
-    <Grid container direction='column' style={styles.root}>
+    <div style={styles.root}>
       <AuthProvider>
         <UserDataProvider>
           <CssBaseline />
           <BrowserRouter>
             <Header />
-            <Grid container style={styles.mainContainer}>
+            <div style={styles.mainContainer}>
               <Content />
-            </Grid>
+            </div>
             {/* <Footer /> */}
           </BrowserRouter>
         </UserDataProvider>
       </AuthProvider>
-    </Grid>
+    </div>
   );
 }
 

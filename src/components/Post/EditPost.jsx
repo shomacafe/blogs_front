@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { TextField, Button, Box, Typography, Card, CardHeader, Avatar } from '@mui/material';
+import { TextField, Button,Card, CardHeader } from '@mui/material';
 import clientApi from '../../api/client';
 import Cookies from 'js-cookie';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const styles = {
   container: {
@@ -18,6 +17,11 @@ const styles = {
   },
   card: {
     padding: '2rem',
+  },
+  editButtons: {
+    marginTop: '20px',
+    display: 'flex',
+    justifyContent: 'space-between',
   }
 }
 
@@ -135,13 +139,21 @@ const EditPost = () => {
           <div>
             {thumbnailPreview && <img alt='サムネイルプレビュー' src={thumbnailPreview} width='300px' />}
           </div>
-          <div>
+          <div style={styles.editButtons}>
+            <Button
+              variant="contained"
+              color="inherit"
+              size='large'
+              component={Link}
+              to={'/posts/my_posts'}
+            >
+              戻る
+            </Button>
             <Button
               type="submit"
               variant="contained"
               size="large"
               color="primary"
-              style={{ marginTop: '1rem' }}
             >
               更新する
             </Button>

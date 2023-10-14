@@ -155,14 +155,17 @@ const Header = () => {
       >
         { isSignedIn && (
           <>
-            {/* <MenuItem component={Link} to="/account" onClick={() => setAnchorEl(null)}>
+            <MenuItem component={Link} to="/account" onClick={() => setAnchorEl(null)}>
               アカウント
-            </MenuItem> */}
+            </MenuItem>
             <MenuItem component={Link} to="/new/post" onClick={() => setAnchorEl(null)}>
               記事を投稿する
             </MenuItem>
             <MenuItem component={Link} to="/posts/my_posts" onClick={() => setAnchorEl(null)}>
               投稿した記事
+            </MenuItem>
+            <MenuItem component={Link} to="/posts/favorite" onClick={() => setAnchorEl(null)}>
+              お気に入り登録した記事
             </MenuItem>
             <MenuItem
               onClick={() => {
