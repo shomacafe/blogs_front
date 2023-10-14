@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import clientApi from '../../api/client';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Card, CircularProgress } from '@mui/material';
+import CommentSection from '../Comment/CommentSection';
 
 const styles = {
   spinnerContainer: {
@@ -23,18 +24,17 @@ const styles = {
     margin: '0 20px',
   },
   titleCard: {
-    padding: '20px',
+    padding: '10px 20px',
     marginBottom: '20px',
   },
-  image: {
-    marginBottom: '40px'
+  bodyText: {
+    margin: '40px 0'
   },
   body: {
     marginBottom: '20px',
   },
   bodyCard: {
     padding: '20px',
-    minHeight: '100vh',
   },
   sideBar: {
     maxWidth: '300px',
@@ -47,13 +47,16 @@ const ShowPost = () => {
   const [postData, setPostData ] = useState();
   const {isSignedIn, currentUser, loading} = useContext(AuthContext);
   const [postLoading, setPostLoading] = useState(true);
+  const [commentData, setCommentData] = useState()
 
   const fetchPost = async () => {
     try {
       const response = await clientApi.get(`posts/${post_id}`)
 
       setPostData(response.data);
+      setCommentData(response.data.comments)
       console.log('postdata', response.data)
+      console.log('commentdata', response.data.comments)
 
     } catch (error) {
       console.error('API レスポンスの取得に失敗しました', error);
@@ -86,11 +89,13 @@ const ShowPost = () => {
             <div style={styles.body}>
               <Card style={styles.bodyCard}>
                 <div style={styles.image}>
-                  {postData.image.url && (
+                  {postData.image.url ? (
                     <img src={postData.image.url} style={{ width: '100%' }} alt="post thumbnail" />
+                  ) : (
+                    <img src='/default_post_image.png' style={{ width: '100%' }} alt="post thumbnail" />
                   )}
                 </div>
-                <div>
+                <div style={styles.bodyText}>
                   {postData.body.split('\n').map((line, index) => (
                     <React.Fragment key={index}>
                       {line}
@@ -99,6 +104,7 @@ const ShowPost = () => {
                   ))}
                 </div>
               </Card>
+              <CommentSection post_id={postData.id} commentData={commentData} setCommentData={setCommentData} />
             </div>
           </div>
           <div style={styles.sideBar}>
