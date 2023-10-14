@@ -4,6 +4,7 @@ import clientApi from '../../api/client';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Card, CircularProgress } from '@mui/material';
 import CommentSection from '../Comment/CommentSection';
+import FavoriteButton from '../Favorite/FavoriteButton';
 
 const styles = {
   spinnerContainer: {
@@ -85,6 +86,7 @@ const ShowPost = () => {
             <Card style={styles.titleCard}>
               <h2>{postData.title}</h2>
               <span>{postData.createdAtFormatted}</span>
+              <FavoriteButton post_id={postData.id} author_id={postData.user.id} />
             </Card>
             <div style={styles.body}>
               <Card style={styles.bodyCard}>
