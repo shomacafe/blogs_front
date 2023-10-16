@@ -64,9 +64,6 @@ const Header = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  console.log('loading', loading)
-  console.log('isSignedIn', isSignedIn)
-
   const handleSignOut = async () => {
     try {
       const response = await signOut();
@@ -123,7 +120,9 @@ const Header = () => {
       <AppBar position="static" style={styles.appBar}>
         <div style={isSignedIn ? styles.singInHeader : styles.signOutHeader}>
           <div style={styles.headerImageArea}>
-            <Link to={'/'}>ブログ</Link>
+            <Link to={'/'}>
+              <img src='/header_icon.png' alt='ヘッダーアイコン' style={{ width: '35px' }}/>
+            </Link>
           </div>
           <div style={isSignedIn ? styles.signInUserInfo : styles.signOutUserInfo}>
             <AuthButtons />
@@ -132,7 +131,7 @@ const Header = () => {
               <Avatar
                 style={styles.avatar}
                 alt='ユーザーアイコン'
-                src={'/default_user_icon.png'}
+                src={currentUser && currentUser.image.url || '/default_user_icon.png'}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
               />
             }
@@ -155,9 +154,6 @@ const Header = () => {
       >
         { isSignedIn && (
           <>
-            <MenuItem component={Link} to="/account" onClick={() => setAnchorEl(null)}>
-              アカウント
-            </MenuItem>
             <MenuItem component={Link} to="/new/post" onClick={() => setAnchorEl(null)}>
               記事を投稿する
             </MenuItem>
@@ -166,6 +162,9 @@ const Header = () => {
             </MenuItem>
             <MenuItem component={Link} to="/posts/favorite" onClick={() => setAnchorEl(null)}>
               お気に入り登録した記事
+            </MenuItem>
+            <MenuItem component={Link} to="/my_page" onClick={() => setAnchorEl(null)}>
+              アカウント
             </MenuItem>
             <MenuItem
               onClick={() => {

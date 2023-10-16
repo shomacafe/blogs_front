@@ -8,18 +8,20 @@ const styles = {
   container: {
     width: '100%',
     maxWidth: '1300px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   header: {
     textAlign: 'center',
   },
   mainContainer: {
+    maxWidth: '1000px',
     width: '100%',
-    display: 'flex',
     minHeight: '100vh',
-    justifyContent: 'center',
   },
   contentContainer: {
-    maxWidth: '1000px',
+
   },
   newButton: {
     display: 'flex',
@@ -27,6 +29,7 @@ const styles = {
     margin: '20px',
   },
   postCard: {
+    width: '100%',
     padding: '20px',
     margin: '0 20px 20px 0',
   },
@@ -78,7 +81,7 @@ const MyPost = () => {
         headers: headers
       });
 
-      console.log(response.data);
+      console.log('レス',response.data);
 
       setPostData(response.data);
     } catch (error) {
@@ -144,38 +147,42 @@ const MyPost = () => {
                 新規投稿する
               </Button>
             </div>
-            {postData.map((post) => (
-              <div key={post.id}>
-                <Card style={styles.postCard}>
-                  <Link to={`/posts/${post.id}`} style={styles.postLink}>
-                    <div style={styles.postInfo}>
-                      <div>
-                        {post.image.url ? (
-                          <img src={post.image.url} style={{ width: '200px' }} alt="post thumbnail" />
-                        ) : (
-                          <img src='/default_post_image.png' style={{ width: '200px' }} alt="post thumbnail" />
-                        )}
+            {postData.length > 0 ? (
+              postData.map((post) => (
+                <div key={post.id}>
+                  <Card style={styles.postCard}>
+                    <Link to={`/posts/${post.id}`} style={styles.postLink}>
+                      <div style={styles.postInfo}>
+                        <div>
+                          {post.image.url ? (
+                            <img src={post.image.url} style={{ width: '200px' }} alt="post thumbnail" />
+                          ) : (
+                            <img src='/default_post_image.png' style={{ width: '200px' }} alt="post thumbnail" />
+                          )}
+                        </div>
+                        <div style={styles.postInfoContent}>
+                          <Typography variant="h4">{post.title}</Typography>
+                          <Typography>{post.createdAtFormatted} コメント{post.comments.length}件</Typography>
+                          <Typography style={styles.postBody}>
+                            {post.body.length > 50 ? `${post.body.slice(0, 50)}...` : post.body}
+                          </Typography>
+                        </div>
                       </div>
-                      <div style={styles.postInfoContent}>
-                        <Typography variant="h4">{post.title}</Typography>
-                        <Typography>{post.createdAtFormatted} コメント{post.comments.length}件</Typography>
-                        <Typography style={styles.postBody}>
-                          {post.body.length > 50 ? `${post.body.slice(0, 50)}...` : post.body}
-                        </Typography>
-                      </div>
+                    </Link>
+                    <div style={styles.myPostButtons}>
+                      <Button variant='outlined' color='primary'onClick={() => handleEditClick(post.id)}>
+                        編集
+                      </Button>
+                      <Button variant='outlined' color='error'onClick={() => handleDeleteClick(post.id)}>
+                        削除
+                      </Button>
                     </div>
-                  </Link>
-                  <div style={styles.myPostButtons}>
-                    <Button variant='outlined' color='primary'onClick={() => handleEditClick(post.id)}>
-                      編集
-                    </Button>
-                    <Button variant='outlined' color='error'onClick={() => handleDeleteClick(post.id)}>
-                      削除
-                    </Button>
-                  </div>
-                </Card>
-              </div>
-            ))}
+                  </Card>
+                </div>
+              ))
+            ) : (
+              <p style={{ textAlign: 'center' }}>投稿した記事がありません。</p>
+            )}
           </div>
         </div>
       </div>

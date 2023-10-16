@@ -1,13 +1,18 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import clientApi from '../../api/client';
-import { Button, Card, TextField } from '@mui/material';
+import { Avatar, Button, Card, TextField } from '@mui/material';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const styles = {
   card: {
     padding: '20px',
+  },
+  commentContainer: {
+    display: 'flex',
+    gap: '20px',
+    marginBottom: '15px',
   },
   commentHead: {
     display: 'flex',
@@ -24,13 +29,21 @@ const styles = {
   linkText: {
     cursor: 'pointer',
     color: 'gray',
+  },
+  avatar: {
+    width: '50px',
+    height: '50px',
+  },
+  errorText: {
+    color: 'red',
   }
 }
 
 const CommentSection = ({ post_id, commentData, setCommentData }) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { currentUser, isSignedIn } = useContext(AuthContext);
   const [editedComments, setEditedComments] = useState({});
+  const [apiErrors, setApiErrors] = useState(null);
 
   const onSubmit = async (data) => {
     try {
@@ -55,7 +68,12 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
 
       reset();
     } catch (error) {
-      console.error('コメントの投稿に失敗しました', error);
+      if (error.response && error.response.data) {
+        setApiErrors(error.response.data);
+        console.log(error.response.data)
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -104,7 +122,12 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
         [commentId]: false,
       }));
     } catch (error) {
-      console.error('コメントの更新に失敗しました', error);
+      if (error.response && error.response.data) {
+        setApiErrors(error.response.data);
+        console.log(error.response.data)
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -152,17 +175,36 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
               </>
             ) : (
               <>
-                <div style={styles.commentHead}>
-                  <h4 style={styles.commentHeadContent}>{comment.user.name}</h4>
-                  <p style={styles.commentHeadContent}>{comment.updatedAtFormatted}</p>
-                  {comment.user && currentUser && comment.user.id === currentUser.id && (
-                    <div style={styles.buttonContainer}>
-                      <div onClick={() => handleEdit(comment.id)} style={styles.linkText}>編集</div>
-                      <div onClick={() => handleDelete(comment.id)} style={styles.linkText}>削除</div>
+                <div style={styles.commentContainer}>
+                  <div>
+                    {comment.user.image ? (
+                      <Avatar style={styles.avatar} alt='ユーザーアイコン' src={comment.user.image.url} />
+                    ) : (
+                      <img src="/default_user_icon.png" alt="Default User Icon" style={{ width: '100px' }} />
+                    )}
+                  </div>
+                  <div>
+                    <div style={styles.commentHead}>
+                      <h4 style={styles.commentHeadContent}>{comment.user.name}</h4>
+                      <p style={styles.commentHeadContent}>{comment.updatedAtFormatted}</p>
+                      {comment.user && currentUser && comment.user.id === currentUser.id && (
+                        <div style={styles.buttonContainer}>
+                          <div onClick={() => handleEdit(comment.id)} style={styles.linkText}>編集</div>
+                          <div onClick={() => handleDelete(comment.id)} style={styles.linkText}>削除</div>
+                        </div>
+                      )}
                     </div>
-                  )}
+                    <div style={styles.bodyText}>
+                      {comment.body.split('\n').map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <p>{comment.body}</p>
+
               </>
             )}
           </div>
@@ -174,9 +216,15 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
               multiline
               rows={3}
               {...register('body', { required: 'コメントを入力してください。' })}
+              error={!!errors.body}
               placeholder='コメントする'
               fullWidth
               margin='dense'
+              helperText={
+                <div style={styles.errorText}>
+                  {errors.body?.message || (apiErrors && apiErrors.body)}
+                </div>
+              }
             />
             <div>
               <Button

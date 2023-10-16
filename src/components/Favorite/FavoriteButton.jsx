@@ -19,7 +19,9 @@ const FavoriteButton = ({ post_id, author_id }) => {
         };
 
         const user_id = currentUser.id;
-        const response = await clientApi.get(`/posts/${post_id}/favorite_status?user_id=${user_id}`)
+        const response = await clientApi.get(`/posts/${post_id}/favorite_status?user_id=${user_id}`, {
+          headers: headers
+        })
 
         setFavorite(response.data.isFavorite);
         console.log('favorite', favorite);
@@ -32,7 +34,7 @@ const FavoriteButton = ({ post_id, author_id }) => {
     };
 
     fetchFavoriteStatus();
-  }, [currentUser.id, post_id]);
+  }, [post_id, currentUser]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -73,7 +75,7 @@ const FavoriteButton = ({ post_id, author_id }) => {
       onClick={() => handleFavorite()}
       variant='contained'
       color='success'
-      disabled={currentUser.id ===  author_id}
+      disabled={currentUser && currentUser.id ===  author_id}
     >
       {favorite ? 'お気に入りを解除する' : 'お気に入り登録する'}
     </Button>

@@ -14,14 +14,17 @@ const styles = {
   submitBtn: {
     marginTop: '2rem',
     flexGrow: 1,
-    textTransform: "none"
+    textTransform: "none",
   },
   header: {
-    textAlign: "center"
+    textAlign: "center",
   },
   card: {
     padding: '2rem',
-    maxWidth: 400
+    maxWidth: '600px',
+  },
+  link: {
+    textDecoration: "none",
   },
   errorText: {
     color: 'red',
@@ -35,23 +38,19 @@ const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [errorMessages, setErrorMessages] = useState({
-    name: '',
-    password: '',
-    passwordConfirmation: '',
-  });
+  const [errorMessages, setErrorMessages] = useState([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    setIsFormSubmitted(true)
+    setIsFormSubmitted(true);
 
     const params = {
       name: name,
       email: email,
       password: password,
       password_confirmation: passwordConfirmation,
-    }
+    };
 
     try {
       const response = await signUp(params);
@@ -69,28 +68,30 @@ const SignUpForm = () => {
         navigate('/');
         alert('新規登録しました');
       } else {
-        alert('新規登録できませんでした')
+        alert('新規登録できませんでした');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
-        const apiErrors = error.response.data.errors
-        console.log(apiErrors)
+        const apiErrors = error.response.data.errors;
+        const fullMessages = apiErrors.fullMessages;
+        console.log(fullMessages)
 
-        setErrorMessages({
-          name: apiErrors.name ?　apiErrors.name[0] : '',
-          password: apiErrors.password ? apiErrors.password.find((e) => e.includes('パスワード')) || '' : '',
-          passwordConfirmation: apiErrors.passwordConfirmation ? apiErrors.passwordConfirmation.find((e) => e.includes('確認用パスワード')) || '' : '',
-        })
+        setErrorMessages(fullMessages)
       }
       console.log(error);
     }
   };
 
   return (
-    <div className={styles.container}>
+    <div style={styles.container}>
       <form noValidate autoComplete='off'>
-        <Card className={styles.card}>
-          <CardHeader className={styles.header} title='新規登録' />
+        <Card style={styles.card}>
+          <CardHeader style={styles.header} title='新規登録' />
+          {errorMessages.map((message, index) => (
+            <div key={index} style={styles.errorText}>
+              {message}
+            </div>
+          ))}
           <CardContent>
             <TextField
               variant="outlined"
@@ -101,8 +102,8 @@ const SignUpForm = () => {
               margin="dense"
               onChange={event => setName(event.target.value)}
               helperText={
-                ((isFormSubmitted && name === '') && <span className={styles.errorText}>名前を入力してください。</span>) ||
-                <span className={styles.errorText}>{errorMessages.name}</span>
+                ((isFormSubmitted && name === '') && <span style={styles.errorText}>名前を入力してください。</span>) ||
+                <span style={styles.errorText}>{errorMessages.name}</span>
               }
             />
             <TextField
@@ -113,7 +114,7 @@ const SignUpForm = () => {
               value={email}
               margin='dense'
               onChange={(e) => setEmail(e.target.value)}
-              helperText={isFormSubmitted && email === '' ? <span className={styles.errorText}>メールアドレスを入力してください。</span> : ''}
+              helperText={isFormSubmitted && email === '' ? <span style={styles.errorText}>メールアドレスを入力してください。</span> : ''}
             />
             <TextField
               variant='outlined'
@@ -126,8 +127,8 @@ const SignUpForm = () => {
               autoComplete='current-password'
               onChange={(e) => setPassword(e.target.value)}
               helperText={
-                (isFormSubmitted && password === '' && <span className={styles.errorText}>パスワードを入力してください。</span>) ||
-                <span className={styles.errorText}>{errorMessages.password}</span>
+                (isFormSubmitted && password === '' && <span style={styles.errorText}>パスワードを入力してください。</span>) ||
+                <span style={styles.errorText}>{errorMessages.password}</span>
               }
             />
             <TextField
@@ -141,8 +142,8 @@ const SignUpForm = () => {
               autoComplete='current-password'
               onChange={(e) => setPasswordConfirmation(e.target.value)}
               helperText={
-                ((isFormSubmitted && passwordConfirmation ) === '' && <span className={styles.errorText}>パスワード確認を入力してください。</span>) ||
-                isFormSubmitted && <span className={styles.errorText}>{errorMessages.passwordConfirmation}</span>
+                ((isFormSubmitted && passwordConfirmation ) === '' && <span style={styles.errorText}>パスワード確認を入力してください。</span>) ||
+                isFormSubmitted && <span style={styles.errorText}>{errorMessages.passwordConfirmation}</span>
               }
             />
             <Button
@@ -151,14 +152,14 @@ const SignUpForm = () => {
               size='large'
               fullWidth
               dasabled={!name || !email || !password || !passwordConfirmation ? true : false}
-              className={styles.submitBtn}
+              style={styles.submitBtn}
               onClick={handleSignUp}
             >
               登録
             </Button>
-            <Box textAlign='center' className={styles.box}>
+            <Box textAlign='center' style={styles.box}>
               <Typography valiant='body2'>
-                ログインは<Link to='/signin_form' className={styles.link}>こちら</Link>
+                ログインは<Link to='/signin_form' style={styles.link}>こちら</Link>
               </Typography>
             </Box>
           </CardContent>

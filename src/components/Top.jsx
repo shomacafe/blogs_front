@@ -27,7 +27,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '20px',
-  }
+  },
 }
 
 const Top = () => {

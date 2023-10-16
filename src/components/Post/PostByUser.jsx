@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Grid, CircularProgress, Typography, Box, Card } from '@mui/material';
 import clientApi from '../../api/client';
 import { Link, useParams } from 'react-router-dom';
+import ProfileCard from '../User/ProfileCard';
 
 const styles = {
   container: {
@@ -121,9 +122,7 @@ const PostByUser = () => {
             ))}
           </div>
           <div style={styles.sideBar}>
-            <Card>
-              プロフィールが入ります。
-            </Card>
+            <ProfileCard author={ postData[0].user } />
           </div>
         </div>
       </div>

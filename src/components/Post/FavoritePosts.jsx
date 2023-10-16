@@ -95,7 +95,8 @@ const PostByUser = () => {
         <h2 style={styles.header}>お気に入り</h2>
         <div style={styles.mainContainer}>
           <div>
-            {postData.map((post) => (
+          {postData.length > 0 ? (
+            postData.map((post) => (
               <div key={post.id}>
                 <Card style={styles.postCard}>
                   <Link to={`/posts/${post.id}`} style={styles.postLink}>
@@ -118,7 +119,10 @@ const PostByUser = () => {
                   </Link>
                 </Card>
               </div>
-            ))}
+            ))
+          ) : (
+            <p style={{ textAlign: 'center' }}>お気に入り登録した記事がありません。</p>
+          )}
           </div>
         </div>
       </div>

@@ -14,20 +14,20 @@ const styles = {
   submitBtn: {
     marginTop: '2rem',
     flexGrow: 1,
-    textTransform: "none"
+    textTransform: "none",
   },
   header: {
-    textAlign: "center"
+    textAlign: "center",
   },
   card: {
     padding: '2rem',
-    maxWidth: 400
+    maxWidth: '600px',
   },
   box: {
-    marginTop: "2rem"
+    marginTop: "2rem",
   },
   link: {
-    textDecoration: "none"
+    textDecoration: "none",
   },
   errorText: {
     color: 'red',
@@ -77,12 +77,12 @@ const SignInForm = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div style={styles.container}>
       <form noValidate autoComplete='off'>
-        <Card className={styles.card}>
-          <CardHeader className={styles.header} title='ログイン' />
+        <Card style={styles.card}>
+          <CardHeader style={styles.header} title='ログイン' />
           <CardContent>
-            {isFormSubmitted && <span className={styles.errorText}>{errorMessages}</span>}
+            {isFormSubmitted && <span style={styles.errorText}>{errorMessages}</span>}
             <TextField
               variant='outlined'
               required
@@ -91,7 +91,7 @@ const SignInForm = () => {
               value={email}
               margin='dense'
               onChange={(e) => setEmail(e.target.value)}
-              helperText={isFormSubmitted && email === '' ? <span className={styles.errorText}>メールアドレスを入力してください。</span> : ''}
+              helperText={isFormSubmitted && email === '' ? <span style={styles.errorText}>メールアドレスを入力してください。</span> : ''}
             />
             <TextField
               variant='outlined'
@@ -103,7 +103,7 @@ const SignInForm = () => {
               margin='dense'
               autoComplete='current-password'
               onChange={(e) => setPassword(e.target.value)}
-              helperText={isFormSubmitted && password === '' ? <span className={styles.errorText}>パスワードを入力してください。</span> : ''}
+              helperText={isFormSubmitted && password === '' ? <span style={styles.errorText}>パスワードを入力してください。</span> : ''}
             />
             <Button
               type='submit'
@@ -111,14 +111,14 @@ const SignInForm = () => {
               size='large'
               fullWidth
               dasabled={!email || !password ? true : false}
-              className={styles.submitBtn}
+              style={styles.submitBtn}
               onClick={handleSignIn}
             >
               ログイン
             </Button>
-            <Box textAlign='center' className={styles.box}>
+            <Box textAlign='center' style={styles.box}>
               <Typography valiant='body2'>
-                新規登録ページは<Link to='/signup_form' className={styles.link}>こちら</Link>
+                新規登録ページは<Link to='/signup_form' style={styles.link}>こちら</Link>
               </Typography>
             </Box>
           </CardContent>

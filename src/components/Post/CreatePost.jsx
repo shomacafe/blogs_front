@@ -14,10 +14,13 @@ const styles = {
     margin: 'auto',
   },
   header: {
-    textAlign: "center"
+    textAlign: 'center'
   },
   card: {
     padding: '2rem',
+  },
+  errorText: {
+    color: 'red',
   }
 }
 
@@ -25,6 +28,7 @@ const CreatePost = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
+  const [apiErrors, setApiErrors] = useState(null);
   const navigate = useNavigate();
 
   const handleThumbnailChange = (e) => {
@@ -64,9 +68,14 @@ const CreatePost = () => {
           headers: headers,
         });
         console.log('API レスポンス', response.data)
-        navigate('/');
+        navigate('/posts/my_posts');
       } catch (error) {
-        console.error(error);
+        if (error.response && error.response.data) {
+          setApiErrors(error.response.data);
+          console.log('apiErrors', error.response.data)
+        } else {
+          console.error(error);
+        }
       }
     }
   };
@@ -77,22 +86,30 @@ const CreatePost = () => {
         <Card style={styles.card}>
           <CardHeader style={styles.header} title='記事を投稿する' />
           <TextField
-            label="タイトル"
+            label='タイトル'
             {...register('title', { required: 'タイトルを入力してください。' })}
             error={!!errors.title}
-            helperText={errors.title?.message}
+            helperText={
+              <div style={styles.errorText}>
+                {errors.title?.message || (apiErrors && apiErrors.title)}
+              </div>
+            }
             fullWidth
-            margin="dense"
+            margin='dense'
           />
           <TextField
-            label="本文"
+            label='本文'
             multiline
             rows={25}
             {...register('body', { required: '本文を入力してください。' })}
             error={!!errors.body}
-            helperText={errors.body?.message}
+            helperText={
+              <div style={styles.errorText}>
+                {errors.body?.message || (apiErrors && apiErrors.body)}
+              </div>
+            }
             fullWidth
-            margin="dense"
+            margin='dense'
           />
           <h4>サムネイル画像</h4>
           <input
@@ -116,10 +133,10 @@ const CreatePost = () => {
           </div>
           <div>
             <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
+              type='submit'
+              variant='contained'
+              size='large'
+              color='primary'
               style={{ marginTop: '1rem' }}
             >
               投稿する
