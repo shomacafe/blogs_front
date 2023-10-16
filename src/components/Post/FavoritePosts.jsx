@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, CircularProgress, Typography, Box, Card } from '@mui/material';
+import { Grid, CircularProgress, Typography, Card } from '@mui/material';
 import clientApi from '../../api/client';
 import { Link, useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const styles = {
   container: {
     width: '100%',
     maxWidth: '1300px',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center'
   },
   header: {
     textAlign: 'center'
@@ -54,19 +52,20 @@ const styles = {
 }
 
 const PostByUser = () => {
-  const { blog_id } = useParams();
   const [postData, setPostData] = useState([]);
   const [postLoading, setPostLoading] = useState(true);
 
   const fetchPosts = async () => {
     try {
-      const response = await clientApi.get('posts/index_by_user', {
-        params: {
-          user_id: blog_id,
-        },
-      });
+      const headers = {
+        'access-token': Cookies.get('_access_token'),
+        'client': Cookies.get('_client'),
+        'uid': Cookies.get('_uid'),
+      };
 
-      console.log('params', blog_id)
+      const response = await clientApi.get('posts/favorite_posts', {
+        headers: headers,
+      });
 
       console.log(response.data);
 
@@ -93,6 +92,7 @@ const PostByUser = () => {
   return (
     <>
       <div style={styles.container}>
+        <h2 style={styles.header}>お気に入り</h2>
         <div style={styles.mainContainer}>
           <div>
             {postData.map((post) => (
@@ -119,11 +119,6 @@ const PostByUser = () => {
                 </Card>
               </div>
             ))}
-          </div>
-          <div style={styles.sideBar}>
-            <Card>
-              プロフィールが入ります。
-            </Card>
           </div>
         </div>
       </div>

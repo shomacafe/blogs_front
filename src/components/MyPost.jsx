@@ -1,16 +1,64 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, CircularProgress, Typography, Box, Button } from '@mui/material';
+import { Grid, CircularProgress, Typography, Box, Button, Card } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import clientApi from '../api/client';
 import Cookies from 'js-cookie';
 
 const styles = {
+  container: {
+    width: '100%',
+    maxWidth: '1300px',
+  },
+  header: {
+    textAlign: 'center',
+  },
+  mainContainer: {
+    width: '100%',
+    display: 'flex',
+    minHeight: '100vh',
+    justifyContent: 'center',
+  },
+  contentContainer: {
+    maxWidth: '1000px',
+  },
+  newButton: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '20px',
+  },
+  postCard: {
+    padding: '20px',
+    margin: '0 20px 20px 0',
+  },
+  postInfo: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  postLink: {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
+  postInfoContent: {
+    marginLeft: '20px',
+  },
+  postBody: {
+    marginTop: '20px',
+  },
+  myPostButtons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: '10px',
+  },
+  sideBar: {
+    maxWidth: '300px',
+    width: '100%',
+  },
   spinnerContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100vh',
-  }
+  },
 }
 
 const MyPost = () => {
@@ -82,31 +130,55 @@ const MyPost = () => {
 
   return (
     <>
-      <h2>自分の投稿一覧</h2>
-      {postData.map((post) => (
-        <div key={post.id}>
-          <Link to={`/posts/${post.id}`}>
-            <Box mb={2}>
-              <Typography variant="h4">{post.title}</Typography>
-              <Typography>{post.createdAt}</Typography>
-              {post.image.url ? (
-                <img src={post.image.url} style={{ width: '200px' }} alt="post thumbnail" />
-              ) : (
-                <img src='/default_post_image.png' style={{ width: '200px' }} alt="post thumbnail" />
-              )}
-              <Typography>
-                {post.body.length > 50 ? `${post.body.slice(0, 50)}...` : post.body}
-              </Typography>
-            </Box>
-          </Link>
-          <Button variant='outlined' onClick={() => handleEditClick(post.id)}>
-            編集
-          </Button>
-          <Button variant='outlined' onClick={() => handleDeleteClick(post.id)}>
-            削除
-          </Button>
+      <div style={styles.container}>
+        <h2 style={styles.header}>投稿した記事</h2>
+        <div style={styles.mainContainer}>
+          <div>
+            <div style={styles.newButton}>
+              <Button
+                variant="contained"
+                color="info"
+                component={Link}
+                to={'/new/post'}
+              >
+                新規投稿する
+              </Button>
+            </div>
+            {postData.map((post) => (
+              <div key={post.id}>
+                <Card style={styles.postCard}>
+                  <Link to={`/posts/${post.id}`} style={styles.postLink}>
+                    <div style={styles.postInfo}>
+                      <div>
+                        {post.image.url ? (
+                          <img src={post.image.url} style={{ width: '200px' }} alt="post thumbnail" />
+                        ) : (
+                          <img src='/default_post_image.png' style={{ width: '200px' }} alt="post thumbnail" />
+                        )}
+                      </div>
+                      <div style={styles.postInfoContent}>
+                        <Typography variant="h4">{post.title}</Typography>
+                        <Typography>{post.createdAtFormatted} コメント{post.comments.length}件</Typography>
+                        <Typography style={styles.postBody}>
+                          {post.body.length > 50 ? `${post.body.slice(0, 50)}...` : post.body}
+                        </Typography>
+                      </div>
+                    </div>
+                  </Link>
+                  <div style={styles.myPostButtons}>
+                    <Button variant='outlined' color='primary'onClick={() => handleEditClick(post.id)}>
+                      編集
+                    </Button>
+                    <Button variant='outlined' color='error'onClick={() => handleDeleteClick(post.id)}>
+                      削除
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+      </div>
     </>
   )
 }

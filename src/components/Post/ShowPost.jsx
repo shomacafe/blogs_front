@@ -4,6 +4,7 @@ import clientApi from '../../api/client';
 import { AuthContext } from '../../contexts/AuthContext';
 import { Card, CircularProgress } from '@mui/material';
 import CommentSection from '../Comment/CommentSection';
+import FavoriteButton from '../Favorite/FavoriteButton';
 
 const styles = {
   spinnerContainer: {
@@ -27,8 +28,13 @@ const styles = {
     padding: '10px 20px',
     marginBottom: '20px',
   },
+  titleCardContent: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
   bodyText: {
-    margin: '40px 0'
+    margin: '40px 0',
   },
   body: {
     marginBottom: '20px',
@@ -84,7 +90,14 @@ const ShowPost = () => {
           <div style={styles.contentContainer}>
             <Card style={styles.titleCard}>
               <h2>{postData.title}</h2>
-              <span>{postData.createdAtFormatted}</span>
+              <div style={styles.titleCardContent}>
+                {/* <div> */}
+                  <span>{postData.createdAtFormatted} コメント{postData.comments.length}件</span>
+                {/* </div> */}
+                {/* <div> */}
+                  <FavoriteButton post_id={postData.id} author_id={postData.user.id} />
+                {/* </div> */}
+              </div>
             </Card>
             <div style={styles.body}>
               <Card style={styles.bodyCard}>
