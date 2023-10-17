@@ -5,24 +5,7 @@ import { TextField, Button, Box, Typography, Card, CardHeader, Avatar } from '@m
 import clientApi from '../../api/client';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-
-const styles = {
-  container: {
-    padding: '2rem',
-    width: '100%',
-    maxWidth: '800px',
-    margin: 'auto',
-  },
-  header: {
-    textAlign: 'center'
-  },
-  card: {
-    padding: '2rem',
-  },
-  errorText: {
-    color: 'red',
-  }
-}
+import { useMediaQuery } from 'react-responsive';
 
 const CreatePost = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -30,6 +13,27 @@ const CreatePost = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [apiErrors, setApiErrors] = useState(null);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 600 });
+
+  const styles = {
+    container: {
+      width: '100%',
+      maxWidth: '800px',
+      margin: 'auto',
+    },
+    header: {
+      textAlign: 'center'
+    },
+    card: {
+      padding: isMobile ? '5px' : '30px',
+    },
+    errorText: {
+      color: 'red',
+    },
+    imageButton: {
+      margin: '10px 0',
+    }
+  }
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
@@ -100,7 +104,7 @@ const CreatePost = () => {
           <TextField
             label='本文'
             multiline
-            rows={25}
+            rows={isMobile ? '10' : '25'}
             {...register('body', { required: '本文を入力してください。' })}
             error={!!errors.body}
             helperText={
@@ -124,6 +128,7 @@ const CreatePost = () => {
               variant='contained'
               color='primary'
               component='span'
+              style={styles.imageButton}
             >
               サムネイル画像を選択
             </Button>

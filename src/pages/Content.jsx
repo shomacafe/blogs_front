@@ -36,7 +36,7 @@ const Content = () => {
         <Route path='/signin_form' element={<SignInForm />} />
         <Route path='/new/post' element={<CreatePost />} />
         <Route path='/posts/blogs/:blog_id' element={<PostByUser />} />
-        <Route path='/posts/my_posts' element={<Paper style={styles.paper}><MyPost /></Paper>} />
+        <Route path='/posts/my_posts' element={<MyPost />} />
         <Route path='/posts/:post_id' element={<ShowPost />} />
         <Route path='/posts/edit/:post_id' element={<EditPost />} />
         <Route path='/posts/favorite' element={<FavoritePosts />} />

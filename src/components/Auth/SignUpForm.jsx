@@ -20,8 +20,10 @@ const styles = {
     textAlign: "center",
   },
   card: {
-    padding: '2rem',
     maxWidth: '600px',
+  },
+  box: {
+    marginTop: "2rem",
   },
   link: {
     textDecoration: "none",

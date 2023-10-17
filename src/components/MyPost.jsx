@@ -3,71 +3,70 @@ import { Grid, CircularProgress, Typography, Box, Button, Card } from '@mui/mate
 import { Link, useNavigate } from 'react-router-dom';
 import clientApi from '../api/client';
 import Cookies from 'js-cookie';
-
-const styles = {
-  container: {
-    width: '100%',
-    maxWidth: '1300px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  header: {
-    textAlign: 'center',
-  },
-  mainContainer: {
-    maxWidth: '1000px',
-    width: '100%',
-    minHeight: '100vh',
-  },
-  contentContainer: {
-
-  },
-  newButton: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    margin: '20px',
-  },
-  postCard: {
-    width: '100%',
-    padding: '20px',
-    margin: '0 20px 20px 0',
-  },
-  postInfo: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  postLink: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-  postInfoContent: {
-    marginLeft: '20px',
-  },
-  postBody: {
-    marginTop: '20px',
-  },
-  myPostButtons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    gap: '10px',
-  },
-  sideBar: {
-    maxWidth: '300px',
-    width: '100%',
-  },
-  spinnerContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-  },
-}
+import { useMediaQuery } from 'react-responsive';
 
 const MyPost = () => {
   const [postData, setPostData] = useState([]);
   const navigate = useNavigate();
   const [postLoading, setPostLoading] = useState(true);
+  const isMobile = useMediaQuery({ maxWidth: 600 });
+
+  const styles = {
+    container: {
+      width: '100%',
+      maxWidth: '1300px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    header: {
+      textAlign: 'center',
+    },
+    mainContainer: {
+      maxWidth: '1000px',
+      width: '100%',
+      minHeight: '100vh',
+    },
+    newButton: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      margin: '20px',
+    },
+    postCard: {
+      width: '100%',
+      padding: '20px',
+      margin: '0 20px 20px 0',
+    },
+    postInfo: {
+      display: isMobile ? 'block' : 'flex',
+      alignItems: 'center',
+    },
+    postLink: {
+      textDecoration: 'none',
+      color: 'inherit',
+    },
+    postInfoContent: {
+      marginLeft: '20px',
+    },
+    postBody: {
+      marginTop: '20px',
+    },
+    myPostButtons: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      gap: '10px',
+    },
+    sideBar: {
+      maxWidth: '300px',
+      width: '100%',
+    },
+    spinnerContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    },
+  }
 
   const fetchPosts = async () => {
     try {

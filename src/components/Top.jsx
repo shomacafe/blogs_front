@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import clientApi from '../api/client';
-import { Box, Card, Typography } from '@mui/material';
-
-const styles = {
-  container: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  blogContainer: {
-    flexDirection: 'column'
-  },
-  blogCard: {
-    maxWidth: '1200px',
-    width: '100%',
-    padding: '20px',
-    margin: '20px',
-  },
-  blogLink: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-  latestPost: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-  },
-}
+import { Card, CircularProgress, Typography } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
 
 const Top = () => {
   const [blogData, setBlogData] = useState();
+  const [loading, setLoading] = useState(true);
+  const isMobile = useMediaQuery({ maxWidth: 600 });
+
+  const styles = {
+    container: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+    },
+    blogContainer: {
+      flexDirection: 'column'
+    },
+    blogCard: {
+      maxWidth: '1200px',
+      width: '100%',
+      padding: '20px',
+      margin: '20px',
+    },
+    blogLink: {
+      textDecoration: 'none',
+      color: 'inherit',
+    },
+    latestPost: {
+      display: isMobile ? 'block' : 'flex',
+      alignItems: 'center',
+      gap: '20px'
+    },
+    spinnerContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    },
+  }
 
   const fetchBlog = async () => {
     try {
@@ -41,6 +50,8 @@ const Top = () => {
       setBlogData(postData);
     } catch (error) {
       console.error('API レスポンスの取得に失敗しました', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,10 +59,18 @@ const Top = () => {
     fetchBlog();
   }, [])
 
+  if (loading) {
+    return (
+      <div style={ styles.spinnerContainer}>
+        <CircularProgress />
+      </div>
+    )
+  }
+
+
   return (
     <>
       <div style={styles.container}>
-        <h2>ブログ一覧</h2>
         {blogData ? (
           blogData.map((blog) => (
             <Card style={styles.blogCard} key={blog.id}>

@@ -20,7 +20,6 @@ const styles = {
     textAlign: "center",
   },
   card: {
-    padding: '2rem',
     maxWidth: '600px',
   },
   box: {

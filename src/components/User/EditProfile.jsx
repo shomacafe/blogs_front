@@ -8,16 +8,12 @@ import Cookies from 'js-cookie'
 
 const styles = {
   container: {
-    padding: '2rem',
     width: '100%',
     maxWidth: '800px',
     margin: 'auto',
-    // [theme.breakpoints.down('xs')]: {
-    //   padding: '0',
-    // },
   },
   submitBtn: {
-    marginTop: '2rem',
+    marginTop: '20px',
     flexGrow: 1,
     textTransform: "none"
   },
@@ -26,12 +22,9 @@ const styles = {
   },
   card: {
     padding: '20px',
-    // [theme.breakpoints.down('xs')]: {
-    //   padding: 0,
-    // }
   },
   form: {
-    marginTop: '2rem',
+    marginTop: '20px',
     display: 'flex',
     justifyContent: 'space-between',
   },
@@ -44,10 +37,10 @@ const styles = {
   avatar: {
     width: '120px',
     height: '120px',
-    marginBottom: '1rem'
+    marginBottom: '10px'
   },
   avatarButton: {
-    margin: '1rem',
+    margin: '10px',
   },
   errorText: {
     color: 'red',

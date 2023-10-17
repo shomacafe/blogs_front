@@ -1,9 +1,10 @@
-import { Grid, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { UserDataProvider } from "./contexts/UserDataContext";
 import Header from "./components/Header";
 import Content from "./pages/Content";
+import Footer from "./components/Footer";
 
 const styles = {
   root: {
@@ -30,7 +31,7 @@ function App() {
             <div style={styles.mainContainer}>
               <Content />
             </div>
-            {/* <Footer /> */}
+            <Footer />
           </BrowserRouter>
         </UserDataProvider>
       </AuthProvider>

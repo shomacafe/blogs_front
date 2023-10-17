@@ -4,46 +4,51 @@ import clientApi from '../../api/client';
 import { Avatar, Button, Card, TextField } from '@mui/material';
 import Cookies from 'js-cookie';
 import { AuthContext } from '../../contexts/AuthContext';
-
-const styles = {
-  card: {
-    padding: '20px',
-  },
-  commentContainer: {
-    display: 'flex',
-    gap: '20px',
-    marginBottom: '15px',
-  },
-  commentHead: {
-    display: 'flex',
-    gap: '20px',
-    alignItems: 'center',
-  },
-  commentHeadContent: {
-    margin: 0,
-  },
-  buttonContainer: {
-    display: 'flex',
-    gap: '10px',
-  },
-  linkText: {
-    cursor: 'pointer',
-    color: 'gray',
-  },
-  avatar: {
-    width: '50px',
-    height: '50px',
-  },
-  errorText: {
-    color: 'red',
-  }
-}
+import { useMediaQuery } from 'react-responsive';
 
 const CommentSection = ({ post_id, commentData, setCommentData }) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { currentUser, isSignedIn } = useContext(AuthContext);
   const [editedComments, setEditedComments] = useState({});
   const [apiErrors, setApiErrors] = useState(null);
+  const isMobile = useMediaQuery({ maxWidth: 600 });
+
+  const styles = {
+    card: {
+      padding: '20px',
+    },
+    commentContainer: {
+      display: 'flex',
+      gap: '20px',
+      marginBottom: '15px',
+    },
+    commentHead: {
+      display: 'flex',
+      gap: isMobile ? '5px' : '20px',
+      alignItems: 'center',
+      marginBottom: isMobile ? '9px' : '0'
+    },
+    commentHeadContent: {
+      margin: 0,
+      fontSize: isMobile ? '12px' : 'inherit',
+    },
+    buttonContainer: {
+      display: 'flex',
+      gap: '10px',
+    },
+    linkText: {
+      cursor: 'pointer',
+      color: 'gray',
+      fontSize: isMobile ? '8px' : 'inherit',
+    },
+    avatar: {
+      width: '50px',
+      height: '50px',
+    },
+    errorText: {
+      color: 'red',
+    }
+  }
 
   const onSubmit = async (data) => {
     try {
@@ -214,7 +219,7 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
               multiline
-              rows={3}
+              rows={isMobile ? '2' : '3'}
               {...register('body', { required: 'コメントを入力してください。' })}
               error={!!errors.body}
               placeholder='コメントする'
