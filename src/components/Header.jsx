@@ -138,7 +138,7 @@ const Header = () => {
               <Avatar
                 style={styles.avatar}
                 alt='ユーザーアイコン'
-                src={currentUser && currentUser.image.url || '/default_user_icon.png'}
+                src={(currentUser && currentUser.image.url) || '/default_user_icon.png'}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
               />
             }

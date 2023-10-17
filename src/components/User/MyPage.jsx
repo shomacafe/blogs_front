@@ -1,9 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 import { Link } from 'react-router-dom'
 import {Typography, CircularProgress, Button, Card, CardContent, CardHeader, Avatar } from '@mui/material'
-import Cookies from 'js-cookie'
-import clientApi from '../../api/client'
 
 const styles = {
   container: {

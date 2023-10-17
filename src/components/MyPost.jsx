@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, CircularProgress, Typography, Box, Button, Card } from '@mui/material';
+import { CircularProgress, Typography, Button, Card } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import clientApi from '../api/client';
 import Cookies from 'js-cookie';

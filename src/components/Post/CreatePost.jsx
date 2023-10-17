@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { TextField, Button, Box, Typography, Card, CardHeader, Avatar } from '@mui/material';
+import { TextField, Button, Card, CardHeader} from '@mui/material';
 import clientApi from '../../api/client';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';

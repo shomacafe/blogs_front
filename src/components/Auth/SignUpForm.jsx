@@ -144,8 +144,8 @@ const SignUpForm = () => {
               autoComplete='current-password'
               onChange={(e) => setPasswordConfirmation(e.target.value)}
               helperText={
-                ((isFormSubmitted && passwordConfirmation ) === '' && <span style={styles.errorText}>パスワード確認を入力してください。</span>) ||
-                isFormSubmitted && <span style={styles.errorText}>{errorMessages.passwordConfirmation}</span>
+                ((isFormSubmitted && passwordConfirmation  === '') && <span style={styles.errorText}>パスワード確認を入力してください。</span>) ||
+                (isFormSubmitted && <span style={styles.errorText}>{errorMessages.passwordConfirmation}</span>)
               }
             />
             <Button

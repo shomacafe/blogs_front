@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, CircularProgress, Typography, Card } from '@mui/material';
+import { CircularProgress, Typography, Card } from '@mui/material';
 import clientApi from '../../api/client';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useMediaQuery } from 'react-responsive';
 

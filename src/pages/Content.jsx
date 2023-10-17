@@ -1,5 +1,4 @@
 import React from 'react'
-import { Paper } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 import Top from '../components/Top'
 import SignUpForm from '../components/Auth/SignUpForm'
@@ -13,19 +12,6 @@ import FavoritePosts from '../components/Post/FavoritePosts'
 import MyPage from '../components/User/MyPage'
 import EditAccount from '../components/User/EditAccount'
 import EditProfile from '../components/User/EditProfile'
-
-
-const styles = {
-  paper: {
-    backgroundColor: 'white',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '10px',
-    padding: '3rem',
-    width: '100%',
-    maxWidth: '1300px',
-    margin: '0 auto',
-  }
-}
 
 const Content = () => {
   return (
