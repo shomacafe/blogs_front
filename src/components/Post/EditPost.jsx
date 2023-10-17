@@ -30,6 +30,7 @@ const EditPost = () => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
+  const [apiErrors, setApiErrors] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,7 +70,7 @@ const EditPost = () => {
   };
 
   const onSubmit = async (data) => {
-    const confirmResult = window.confirm('記事を登録してよろしいですか？');
+    const confirmResult = window.confirm('記事を更新してよろしいですか？');
 
     if (confirmResult) {
       try {
@@ -93,7 +94,12 @@ const EditPost = () => {
         console.log('API レスポンス', response.data)
         navigate('/posts/my_posts');
       } catch (error) {
-        console.error(error);
+        if (error.response && error.response.data) {
+          setApiErrors(error.response.data);
+          console.log('apiErrors', error.response.data)
+        } else {
+          console.error(error);
+        }
       }
     }
   };
@@ -106,7 +112,11 @@ const EditPost = () => {
           <TextField
             {...register('title', { required: 'タイトルを入力してください。' })}
             error={!!errors.title}
-            helperText={errors.title?.message}
+            helperText={
+              <div style={styles.errorText}>
+                {errors.title?.message || (apiErrors && apiErrors.title)}
+              </div>
+            }
             fullWidth
             margin="dense"
           />
@@ -115,7 +125,11 @@ const EditPost = () => {
             rows={25}
             {...register('body', { required: '本文を入力してください。' })}
             error={!!errors.body}
-            helperText={errors.body?.message}
+            helperText={
+              <div style={styles.errorText}>
+                {errors.body?.message || (apiErrors && apiErrors.body)}
+              </div>
+            }
             fullWidth
             margin="dense"
           />

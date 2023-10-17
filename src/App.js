@@ -13,7 +13,7 @@ const styles = {
   mainContainer: {
     display: 'flex',
     justifyContent: 'center',
-    padding: '20px 10px',
+    padding: '50px 10px',
   },
 };
 

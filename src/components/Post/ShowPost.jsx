@@ -1,18 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import clientApi from '../../api/client';
-import { AuthContext } from '../../contexts/AuthContext';
 import { Card, CircularProgress } from '@mui/material';
 import CommentSection from '../Comment/CommentSection';
 import FavoriteButton from '../Favorite/FavoriteButton';
+import ProfileCard from '../User/ProfileCard';
 
 const styles = {
-  spinnerContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-  },
   mainContainer: {
     width: '100%',
     maxWidth: '1200px',
@@ -46,12 +40,17 @@ const styles = {
     maxWidth: '300px',
     width: '100%',
   },
+  spinnerContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+  },
 }
 
 const ShowPost = () => {
   const { post_id } = useParams();
   const [postData, setPostData ] = useState();
-  const {isSignedIn, currentUser, loading} = useContext(AuthContext);
   const [postLoading, setPostLoading] = useState(true);
   const [commentData, setCommentData] = useState()
 
@@ -73,7 +72,7 @@ const ShowPost = () => {
 
   useEffect(() => {
     fetchPost();
-  }, [post_id])
+  }, [])
 
   if (postLoading) {
     return (
@@ -91,12 +90,8 @@ const ShowPost = () => {
             <Card style={styles.titleCard}>
               <h2>{postData.title}</h2>
               <div style={styles.titleCardContent}>
-                {/* <div> */}
-                  <span>{postData.createdAtFormatted} コメント{postData.comments.length}件</span>
-                {/* </div> */}
-                {/* <div> */}
-                  <FavoriteButton post_id={postData.id} author_id={postData.user.id} />
-                {/* </div> */}
+                <span>{postData.createdAtFormatted} コメント{postData.comments.length}件</span>
+                <FavoriteButton post_id={postData.id} author_id={postData.user.id} />
               </div>
             </Card>
             <div style={styles.body}>
@@ -121,11 +116,7 @@ const ShowPost = () => {
             </div>
           </div>
           <div style={styles.sideBar}>
-            <Card>
-              プロフィールが入ります。
-              プロフィールが入ります。
-              プロフィールが入ります。
-            </Card>
+            <ProfileCard author={ postData.user } />
           </div>
         </div>
       }
