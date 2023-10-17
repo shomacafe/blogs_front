@@ -5,54 +5,56 @@ import { Card, CircularProgress } from '@mui/material';
 import CommentSection from '../Comment/CommentSection';
 import FavoriteButton from '../Favorite/FavoriteButton';
 import ProfileCard from '../User/ProfileCard';
-
-const styles = {
-  mainContainer: {
-    width: '100%',
-    maxWidth: '1200px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  contentContainer: {
-    width: '100%',
-    heigth: '100%',
-    margin: '0 20px',
-  },
-  titleCard: {
-    padding: '10px 20px',
-    marginBottom: '20px',
-  },
-  titleCardContent: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  bodyText: {
-    margin: '40px 0',
-  },
-  body: {
-    marginBottom: '20px',
-  },
-  bodyCard: {
-    padding: '20px',
-  },
-  sideBar: {
-    maxWidth: '300px',
-    width: '100%',
-  },
-  spinnerContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-  },
-}
+import { useMediaQuery } from 'react-responsive';
 
 const ShowPost = () => {
   const { post_id } = useParams();
   const [postData, setPostData ] = useState();
   const [postLoading, setPostLoading] = useState(true);
   const [commentData, setCommentData] = useState()
+  const isTablet = useMediaQuery({ maxWidth: 960 });
+
+  const styles = {
+    mainContainer: {
+      width: '100%',
+      maxWidth: '1200px',
+      display: isTablet ? 'block' : 'flex',
+      justifyContent: 'center',
+    },
+    contentContainer: {
+      width: '100%',
+      heigth: '100%',
+      margin:  isTablet ? '0' : '0 20px',
+    },
+    titleCard: {
+      padding: '10px 20px',
+      marginBottom: '20px',
+    },
+    titleCardContent: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    },
+    bodyText: {
+      margin: '40px 0',
+    },
+    body: {
+      marginBottom: '20px',
+    },
+    bodyCard: {
+      padding: '20px',
+    },
+    sideBar: {
+      maxWidth: '300px',
+      width: '100%',
+    },
+    spinnerContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    },
+  }
 
   const fetchPost = async () => {
     try {

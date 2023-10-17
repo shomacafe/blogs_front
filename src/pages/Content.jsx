@@ -1,5 +1,4 @@
 import React from 'react'
-import { Paper } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 import Top from '../components/Top'
 import SignUpForm from '../components/Auth/SignUpForm'
@@ -14,19 +13,6 @@ import MyPage from '../components/User/MyPage'
 import EditAccount from '../components/User/EditAccount'
 import EditProfile from '../components/User/EditProfile'
 
-
-const styles = {
-  paper: {
-    backgroundColor: 'white',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '10px',
-    padding: '3rem',
-    width: '100%',
-    maxWidth: '1300px',
-    margin: '0 auto',
-  }
-}
-
 const Content = () => {
   return (
     <>
@@ -36,7 +22,7 @@ const Content = () => {
         <Route path='/signin_form' element={<SignInForm />} />
         <Route path='/new/post' element={<CreatePost />} />
         <Route path='/posts/blogs/:blog_id' element={<PostByUser />} />
-        <Route path='/posts/my_posts' element={<Paper style={styles.paper}><MyPost /></Paper>} />
+        <Route path='/posts/my_posts' element={<MyPost />} />
         <Route path='/posts/:post_id' element={<ShowPost />} />
         <Route path='/posts/edit/:post_id' element={<EditPost />} />
         <Route path='/posts/favorite' element={<FavoritePosts />} />

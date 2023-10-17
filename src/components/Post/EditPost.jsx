@@ -4,26 +4,7 @@ import { TextField, Button,Card, CardHeader } from '@mui/material';
 import clientApi from '../../api/client';
 import Cookies from 'js-cookie';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-const styles = {
-  container: {
-    padding: '2rem',
-    width: '100%',
-    maxWidth: '800px',
-    margin: 'auto',
-  },
-  header: {
-    textAlign: "center"
-  },
-  card: {
-    padding: '2rem',
-  },
-  editButtons: {
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-  }
-}
+import { useMediaQuery } from 'react-responsive';
 
 const EditPost = () => {
   const { post_id } = useParams();
@@ -32,6 +13,29 @@ const EditPost = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [apiErrors, setApiErrors] = useState(null);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ maxWidth: 600 });
+
+  const styles = {
+    container: {
+      width: '100%',
+      maxWidth: '800px',
+      margin: 'auto',
+    },
+    header: {
+      textAlign: "center"
+    },
+    card: {
+      padding: isMobile ? '5px' : '30px',
+    },
+    editButtons: {
+      marginTop: '20px',
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    imageButton: {
+      margin: '10px 0',
+    }
+  }
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -146,6 +150,7 @@ const EditPost = () => {
               variant='contained'
               color='primary'
               component='span'
+              style={styles.imageButton}
             >
               サムネイル画像を選択
             </Button>

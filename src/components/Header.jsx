@@ -4,65 +4,68 @@ import Cookies from "js-cookie"
 import { AppBar, Button, Menu, MenuItem, Avatar } from '@mui/material';
 import { AuthContext } from '../contexts/AuthContext';
 import { signOut } from '../api/auth';
-
-const styles = {
-  iconButton: {
-    marginRight: '2rem',
-  },
-  appBar: {
-    padding: '10px 30px',
-    minHeight: '80px',
-  },
-  headerImageArea: {
-    margin: 'auto',
-  },
-  headerImage: {
-    maxWidth: '200px',
-    height: '50px',
-  },
-  avatar: {
-    marginLeft: '10px',
-    cursor: 'pointer',
-  },
-  linkBtn: {
-    textTransform: "none"
-  },
-  menuLinks: {
-    display: 'flex',
-    alignItems: 'center',
-    '& > *': {
-      marginRight: '2rem',
-      textDecoration: 'none',
-      color: 'inherit',
-    }
-  },
-  signOutHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  singInHeader: {
-    display: 'flex',
-  },
-  signInUserInfo: {
-    position: 'absolute',
-    top: '12px',
-    right: '10px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  signOutUserInfo: {
-    position: 'absolute',
-    top: '20px',
-    right: '10px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-}
+import { useMediaQuery } from 'react-responsive';
 
 const Header = () => {
   const { loading, isSignedIn, setIsSignedIn, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const isTablet = useMediaQuery({ maxWidth: 960 });
+
+  const styles = {
+    iconButton: {
+      marginRight: '2rem',
+    },
+    appBar: {
+      padding: '10px 30px',
+      backgroundColor: '#20b2aa',
+      minHeight: '80px',
+    },
+    headerImageArea: {
+      margin: 'auto',
+    },
+    headerImage: {
+      maxWidth: '200px',
+      height: '50px',
+    },
+    avatar: {
+      marginLeft: '10px',
+      cursor: 'pointer',
+    },
+    linkBtn: {
+      textTransform: "none"
+    },
+    menuLinks: {
+      display: 'flex',
+      alignItems: 'center',
+      '& > *': {
+        marginRight: '2rem',
+        textDecoration: 'none',
+        color: 'inherit',
+      }
+    },
+    signOutHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    singInHeader: {
+      display: 'flex',
+    },
+    signInUserInfo: {
+      position: 'absolute',
+      top: '12px',
+      right: '10px',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    signOutUserInfo: {
+      position: 'absolute',
+      top: '20px',
+      right: '10px',
+      display: 'flex',
+      alignItems: 'center',
+    },
+  }
 
   const handleSignOut = async () => {
     try {
@@ -98,6 +101,7 @@ const Header = () => {
               to='/signin_form'
               color='inherit'
               style={styles.linkBtn}
+              size='small'
             >
               ログイン
             </Button>
@@ -106,6 +110,7 @@ const Header = () => {
               to='/signup_form'
               color="inherit"
               style={styles.linkBtn}
+              size='small'
             >
               新規登録
             </Button>
@@ -126,12 +131,14 @@ const Header = () => {
           </div>
           <div style={isSignedIn ? styles.signInUserInfo : styles.signOutUserInfo}>
             <AuthButtons />
+            {!isTablet &&
             <p style={styles.currentUserName}>{isSignedIn ? currentUser && currentUser.name : '' }</p>
+            }
             {isSignedIn &&
               <Avatar
                 style={styles.avatar}
                 alt='ユーザーアイコン'
-                src={currentUser && currentUser.image.url || '/default_user_icon.png'}
+                src={(currentUser && currentUser.image.url) || '/default_user_icon.png'}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
               />
             }

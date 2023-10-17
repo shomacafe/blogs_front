@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 const FavoriteButton = ({ post_id, author_id }) => {
   const [favorite, setFavorite] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, isSignedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
@@ -75,7 +75,7 @@ const FavoriteButton = ({ post_id, author_id }) => {
       onClick={() => handleFavorite()}
       variant='contained'
       color='success'
-      disabled={currentUser && currentUser.id ===  author_id}
+      disabled={(!isSignedIn) || (currentUser && currentUser.id === author_id)}
     >
       {favorite ? 'お気に入りを解除する' : 'お気に入り登録する'}
     </Button>
