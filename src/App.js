@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import { UserDataProvider } from "./contexts/UserDataContext";
+import Header from "./components/Header";
+import Content from "./pages/Content";
+import Footer from "./components/Footer";
+
+const styles = {
+  root: {
+    backgroundColor: '#f7f7f7',
+    minHeight: '100vh'
+  },
+  mainContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '50px 10px',
+  },
+};
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={styles.root}>
+      <AuthProvider>
+        <UserDataProvider>
+          <CssBaseline />
+          <BrowserRouter>
+            <Header />
+            <div style={styles.mainContainer}>
+              <Content />
+            </div>
+            <Footer />
+          </BrowserRouter>
+        </UserDataProvider>
+      </AuthProvider>
     </div>
   );
 }
