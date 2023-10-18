@@ -43,8 +43,6 @@ const EditPost = () => {
         const response = await clientApi.get(`/posts/${post_id}`);
         const postData = response.data;
 
-        console.log(postData.title)
-
         setValue('title', postData.title);
         setValue('body', postData.body);
 
@@ -92,15 +90,14 @@ const EditPost = () => {
           requestData.append('post[image]', thumbnail);
         }
 
-        const response = await clientApi.put(`/posts/${post_id}`, requestData, {
+        await clientApi.put(`/posts/${post_id}`, requestData, {
           headers: headers,
         });
-        console.log('API レスポンス', response.data)
+
         navigate('/posts/my_posts');
       } catch (error) {
         if (error.response && error.response.data) {
           setApiErrors(error.response.data);
-          console.log('apiErrors', error.response.data)
         } else {
           console.error(error);
         }

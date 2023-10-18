@@ -69,8 +69,6 @@ const PostByUser = () => {
         headers: headers,
       });
 
-      console.log(response.data);
-
       setPostData(response.data);
     } catch (error) {
       console.error('API レスポンスの取得に失敗しました', error);

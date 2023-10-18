@@ -66,11 +66,10 @@ const EditAccount = () => {
           password_confirmation: data.confirmPassword,
         };
 
-        const response = await clientApi.put(`/users/account`, requestData, {
+        await clientApi.put(`/users/account`, requestData, {
           headers: headers,
         });
 
-        console.log('API レスポンス', response.data)
         alert('アカウントを更新しましたので、再度ログインをお願いいたします。')
         navigate('/signin_form');
       } catch (error) {
@@ -83,7 +82,6 @@ const EditAccount = () => {
           })
         }
 
-        console.log(errorMessages)
         console.error('API レスポンスの取得に失敗しました', error);
       }
     }

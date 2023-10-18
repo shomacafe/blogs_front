@@ -67,15 +67,14 @@ const CreatePost = () => {
           requestData.append('post[image]', thumbnail);
         }
 
-        const response = await clientApi.post('/posts', requestData, {
+        await clientApi.post('/posts', requestData, {
           headers: headers,
         });
-        console.log('API レスポンス', response.data)
+
         navigate('/posts/my_posts');
       } catch (error) {
         if (error.response && error.response.data) {
           setApiErrors(error.response.data);
-          console.log('apiErrors', error.response.data)
         } else {
           console.error(error);
         }

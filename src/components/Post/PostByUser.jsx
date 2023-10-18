@@ -60,29 +60,25 @@ const PostByUser = () => {
     },
   }
 
-  const fetchPosts = async () => {
-    try {
-      const response = await clientApi.get('posts/index_by_user', {
-        params: {
-          user_id: blog_id,
-        },
-      });
-
-      console.log('params', blog_id)
-
-      console.log(response.data);
-
-      setPostData(response.data);
-    } catch (error) {
-      console.error('API レスポンスの取得に失敗しました', error);
-    } finally {
-      setPostLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await clientApi.get('posts/index_by_user', {
+          params: {
+            user_id: blog_id,
+          },
+        });
+
+        setPostData(response.data);
+      } catch (error) {
+        console.error('API レスポンスの取得に失敗しました', error);
+      } finally {
+        setPostLoading(false);
+      }
+    };
+
     fetchPosts();
-  }, [])
+  }, [blog_id, postData])
 
   if (postLoading) {
     return (

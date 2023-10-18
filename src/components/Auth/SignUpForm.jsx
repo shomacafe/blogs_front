@@ -76,11 +76,10 @@ const SignUpForm = () => {
       if (error.response && error.response.data && error.response.data.errors) {
         const apiErrors = error.response.data.errors;
         const fullMessages = apiErrors.fullMessages;
-        console.log(fullMessages)
 
         setErrorMessages(fullMessages)
       }
-      console.log(error);
+      console.error(error);
     }
   };
 

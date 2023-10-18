@@ -24,8 +24,6 @@ const FavoriteButton = ({ post_id, author_id }) => {
         })
 
         setFavorite(response.data.isFavorite);
-        console.log('favorite', favorite);
-
       }  catch (error) {
         console.error('お気に入り状態の取得に失敗しました', error);
       } finally {
@@ -34,7 +32,7 @@ const FavoriteButton = ({ post_id, author_id }) => {
     };
 
     fetchFavoriteStatus();
-  }, [post_id, currentUser]);
+  }, [post_id, currentUser, favorite]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -51,8 +49,6 @@ const FavoriteButton = ({ post_id, author_id }) => {
       const requestData = {
         post_id: post_id
       }
-
-      console.log('Request Data:', requestData);
 
       if (favorite) {
         await clientApi.delete(`/posts/${post_id}/unfavorite`, {

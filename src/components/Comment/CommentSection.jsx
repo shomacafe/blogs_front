@@ -75,7 +75,6 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
     } catch (error) {
       if (error.response && error.response.data) {
         setApiErrors(error.response.data);
-        console.log(error.response.data)
       } else {
         console.error(error);
       }
@@ -129,7 +128,6 @@ const CommentSection = ({ post_id, commentData, setCommentData }) => {
     } catch (error) {
       if (error.response && error.response.data) {
         setApiErrors(error.response.data);
-        console.log(error.response.data)
       } else {
         console.error(error);
       }

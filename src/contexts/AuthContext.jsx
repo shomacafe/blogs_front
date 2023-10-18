@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(response?.data.data);
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     } finally {
       setLoading(false);
     }
