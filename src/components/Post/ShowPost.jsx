@@ -56,25 +56,22 @@ const ShowPost = () => {
     },
   }
 
-  const fetchPost = async () => {
-    try {
-      const response = await clientApi.get(`posts/${post_id}`)
-
-      setPostData(response.data);
-      setCommentData(response.data.comments)
-      console.log('postdata', response.data)
-      console.log('commentdata', response.data.comments)
-
-    } catch (error) {
-      console.error('API レスポンスの取得に失敗しました', error);
-    } finally {
-      setPostLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await clientApi.get(`posts/${post_id}`)
+
+        setPostData(response.data);
+        setCommentData(response.data.comments)
+      } catch (error) {
+        console.error('API レスポンスの取得に失敗しました', error);
+      } finally {
+        setPostLoading(false);
+      }
+    };
+
     fetchPost();
-  }, [])
+  }, [post_id])
 
   if (postLoading) {
     return (

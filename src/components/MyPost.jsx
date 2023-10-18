@@ -80,8 +80,6 @@ const MyPost = () => {
         headers: headers
       });
 
-      console.log('レス',response.data);
-
       setPostData(response.data);
     } catch (error) {
       console.error('API レスポンスの取得に失敗しました', error);
@@ -109,13 +107,12 @@ const MyPost = () => {
           'uid': Cookies.get('_uid'),
         };
 
-        const response = await clientApi.delete(`/posts/${postId}` , {
+        await clientApi.delete(`/posts/${postId}` , {
           headers: headers,
         });
 
         fetchPosts();
 
-        console.log('API レスポンス', response.data)
       } catch (error) {
         console.error('記事の削除に失敗しました', error);
       }

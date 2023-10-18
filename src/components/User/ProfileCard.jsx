@@ -23,7 +23,6 @@ const styles = {
 }
 
 const ProfileCard = ({ author }) => {
-  console.log('投稿者', author)
 
   return (
     <Card style={styles.profileCard}>

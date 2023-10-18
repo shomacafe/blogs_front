@@ -91,16 +91,14 @@ const EditProfile = () => {
           requestData.append('user[image]', userImage);
         }
 
-        const response = await clientApi.put(`/users/profile`, requestData, {
+        await clientApi.put(`/users/profile`, requestData, {
           headers: headers,
         });
 
-        console.log('API レスポンス', response.data)
         navigate('/my_page');
       } catch (error) {
         if (error.response && error.response.data && error.response.data.errors) {
           const apiErrors = error.response.data.errors
-          console.log('error.response.data.errors', error.response.data.errors)
 
           setErrorMessages({
             name: apiErrors.find((e) => e.includes('名前')) || '',
@@ -108,7 +106,6 @@ const EditProfile = () => {
           })
         }
 
-        console.log(errorMessages)
         console.error('API レスポンスの取得に失敗しました', error);
       }
     }
