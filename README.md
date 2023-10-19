@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# ブログ投稿アプリ（フロントエンド側）
+フロントエンドはReact、バックエンドはRails（APIモード）で制作しました。
+<img width="1439" alt="スクリーンショット 2023-10-19 18 35 49" src="https://github.com/shomacafe/crowd_funding_app/assets/97627380/071dd452-0d2a-44b1-9e2c-f60ad520ddea">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 機能一覧
+* ユーザー登録
+* ログイン
+* ログアウト
+* ブログ一覧表示
+* ブログ記事一覧表示
+* ブログ記事詳細表示
+* ブログ記事作成
+* ブログ記事編集
+* ブログ記事削除
+* 自分のブログ記事一覧表示
+* コメント作成機能
+* コメント編集機能
+* コメント削除機能
+* お気に入り登録
+* お気に入り解除
+* お気に入りブログ記事一覧表示
 
-## Available Scripts
+## APIエンドポイント一覧
+●認証
+* POST /api/auth：ユーザー登録
+* POST /api/auth/sign_in：ログイン
+* DELETE /api/auth/sign_out：ログアウト
+* GET  /api/auth/sessions：ログインユーザー取得
 
-In the project directory, you can run:
+●ブログ記事（Post）
+* GET /api/posts/blogs：全てのブログの取得
+* GET /api/posts/{id}：特定のブログ記事を取得
+* POST /api/posts：ブログ記事の作成
+* PUT /api/posts/{id}：特定のブログ記事の更新
+* DELETE /api/posts/{id}：特定のブログ記事の削除
+* GET /api/posts/users/{user_id}：特定のユーザーが投稿したブログ記事の取得
+* GET /api/posts/my_posts：自分が投稿したブログ記事の取得
 
-### `npm start`
+●コメント（Comment）
+* POST /api/posts/{id}/comments：コメントの作成
+* PUT /api/posts/{id}/comments/{comment_id}：コメントの編集
+* DELETE /api/posts/{id}/comments/{comment_id}：コメントの削除
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+●お気に入り（Favorite）
+* POST /api/posts/{id}/favorites：お気に入り登録
+* DELETE /api/posts/{id}/favorites：お気に入り解除
+* GET /api/my_favorites：自分のお気に入りしたブログ記事一覧
